@@ -1,20 +1,28 @@
 \chapter{Introdução}
-Este trabalho utiliza o pacote abntex~\cite{abntex2classe}. 
-Edite o arquivo uepg.sty para incluir dados sobre a instituição (setor de conhecimento e departamento).
 
-Edite o arquivo tcc.tex para incluir os arquivos de sua dissertação. Os arquivos que são incluídos estão listados abaixo:
+A incorporação de ferramentas de geração de código assistida por inteligência artificial (IA) ao cotidiano do desenvolvimento de software ocorreu de forma acelerada e abrangente. Assistentes como GitHub Copilot, ChatGPT e similares passaram, em poucos anos, de curiosidades tecnológicas a componentes efetivos do fluxo de trabalho de milhões de desenvolvedores ao redor do mundo. O argumento central que impulsiona essa adoção é a produtividade: experimentos controlados demonstram que programadores assistidos por IA concluem tarefas de codificação até 55\% mais rapidamente do que seus pares sem assistência \cite{peng2023}.
 
-\begin{itemize}	
-	\item introducao
-	\item revisao
- 	\item metodologia
-	\item resultados
-	\item conclusao
+Esse ganho, no entanto, não ocorre de forma neutra. À medida que a geração automática de código se torna mais fluente e convincente, emerge uma questão que este trabalho se propõe a investigar: a rapidez com que o código é produzido corresponde à qualidade e à correção do que é entregue? A resposta da literatura recente é perturbadora. \citeonline{pearce2022}, ao avaliar as contribuições de código do GitHub Copilot em 89 cenários baseados nas vulnerabilidades mais críticas catalogadas pelo MITRE CWE Top 25, constataram que aproximadamente 40\% do código gerado continha falhas de segurança. Mais revelador ainda é o estudo de \citeonline{perry2023}: em experimento com desenvolvedores reais realizando tarefas de segurança, o grupo assistido por IA produziu código menos seguro em quatro de cinco tarefas — e o fez com maior confiança em suas próprias soluções do que o grupo sem assistência.
+
+Essa combinação — mais erros, menos percepção dos erros — não é acidental. Ela encontra explicação em um mecanismo cognitivo amplamente documentado na psicologia social, anterior ao surgimento da IA generativa em décadas: o conceito de \textit{cognitive miser}, introduzido por \citeonline{fiske1984}. Segundo esse modelo, o ser humano é, por padrão, um agente avaro em termos de esforço cognitivo: o cérebro recorre a heurísticas e atalhos mentais sempre que possível, reservando o raciocínio analítico profundo apenas para situações em que não há alternativa. A IA generativa não criou essa tendência — ela simplesmente oferece, pela primeira vez, uma via de menor esforço suficientemente boa para tarefas que antes exigiam obrigatoriamente atenção crítica, como escrever e revisar código.
+
+O fenômeno resultante é conhecido como \textit{viés de automação}: a tendência de aceitar, sem questionamento, as sugestões de sistemas automatizados, mesmo quando o indivíduo possui conhecimento técnico suficiente para identificar problemas \cite{mosier1998}. No contexto do desenvolvimento de software, isso significa que um desenvolvedor experiente pode conhecer as boas práticas de segurança, ser capaz de descrevê-las corretamente, e ainda assim aceitar passivamente um trecho de código vulnerável gerado por IA — não por desconhecimento, mas porque o sistema forneceu uma saída plausível o suficiente para que o cérebro não encontrasse motivo para resistir. \citeonline{gerlich2025}, em estudo empírico com 666 participantes, encontrou correlação negativa significativa entre o uso frequente de ferramentas de IA e a capacidade de raciocínio independente, com o \textit{cognitive offloading} atuando como variável mediadora desse efeito.
+
+Agrava esse cenário o fato de que os próprios benchmarks utilizados para avaliar a qualidade dos modelos de geração de código tendem a superestimar seu desempenho. \citeonline{liu2023} demonstraram que o HumanEval — referência padrão da área — superestima a taxa de correção dos modelos em até 29\%, em razão de conjuntos de testes insuficientes. Na prática de engenharia de software real, a distância entre o que os modelos aparentam fazer e o que efetivamente entregam é ainda mais pronunciada: no \textit{benchmark} SWE-bench, que testa modelos em \textit{issues} reais de repositórios do GitHub, os maiores modelos disponíveis resolveram menos de 2\% dos casos \cite{jimenez2024}.
+
+\section{Objetivos}
+
+Este trabalho tem como objetivo geral analisar como o viés de automação e os mecanismos de descarga cognitiva influenciam a qualidade e a correção do código produzido com o auxílio de ferramentas de IA generativa, sob a perspectiva da Engenharia de Computação.
+
+Como objetivos específicos, busca-se:
+
+\begin{itemize}
+	\item revisar os principais estudos empíricos que avaliam a qualidade, a segurança e a correção do código gerado por modelos de linguagem de grande porte;
+	\item examinar os fundamentos teóricos da psicologia cognitiva — em especial o \textit{cognitive miser} e o viés de automação — que explicam a aceitação acrítica de código gerado por IA;
+	\item identificar práticas e mecanismos de desenvolvimento de software que possam atuar como mitigadores do viés de automação no contexto da IA generativa;
+	\item discutir as implicações desses achados para a formação e a prática profissional em Engenharia de Computação.
 \end{itemize}
 
-Você pode incluir mais arquivos editando o tcc.tex, caso sua dissertação necessite de mais capítulos.
+\section{Organização do Trabalho}
 
-Edite os arquivos siglas.tex, simbolos.tex e resumo.tex para incluir o texto de sua dissertação.
-
-Teste de citação~\cite{teste}.
-
+O presente trabalho está organizado da seguinte forma. O Capítulo 2 apresenta a revisão da literatura, abrangendo os fundamentos teóricos da cognição humana relevantes para o problema, os principais estudos empíricos sobre qualidade e segurança do código gerado por IA, e os mecanismos de avaliação utilizados na área. O Capítulo 3 descreve a metodologia adotada para a condução desta pesquisa. O Capítulo 4 apresenta e discute os resultados obtidos. Por fim, o Capítulo 5 expõe as conclusões do trabalho e aponta direções para pesquisas futuras.
