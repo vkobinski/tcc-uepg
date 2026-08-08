@@ -1,105 +1,58 @@
-\chapter{Material e Métodos}
-\section {Considerações Iniciais}
-A partir da classe com menor representatividade na base de dados, classe 4 - Algodão Americano/Salgueiro com 2.747 observações, sendo todos os dados selecionados, foram extraídas das outras seis classes de tipos de cobertura florestal 2.747 observações, selecionadas aleatoriamente com o auxilio do software R, totalizando o conjunto de teste com 19.229 observações, conforme a tabela \ref{tb:dados}.
-\subsection[Teste de subseção]{ Teste de subseção}
-\begin{table}[htbp]
-\caption{Observações Selecionadas}
-\label{tb:dados}
-\centering
-\setlength{\tabcolsep}{5pt}
-\begin{tabular}{cccccc}
-\hline
-Tipo de Cobertura  &Total de  &Observações  &Porcentagem por \\
-Florestal &Observações &Selecionadas &Tipo de Cobertura \\
-\hline
-Classe 1 &211.840 &2747 &1,29\% \\
-Classe 2 &283.301 &2747 &0,97\% \\
-Classe 3 &35.754  &2747 &7,68\% \\
-Classe 4 &2.747   &2747 &100\% \\
-Classe 5 &9.493   &2747 &28,94\% \\
-Classe 6 &17.367  &2747 &15,82\% \\
-Classe 7 &20.510  &2747 &13,39\% \\
-\hline
-\textbf{Total} &\textbf{581.012} &\textbf{19.229} &\textbf{3,31\%} \\
-\hline
-\end{tabular}
-\\
-%\singlespacing
-%\text{\footnotesize Fonte: O autor}
-\end{table}
+\chapter{Metodologia}
+ 
+O estudo que sustenta este TCC tem como objetivo verificar e estudar os 
+impactos do uso de inteligência artificial (IA) no desenvolvimento de software e no papel dos desenvolvedores .  
 
-\section{Exemplo de Código Fonte}
-O código~\ref{code:oddoreven} apresenta um exemplo de uso de listagem de código.
+Com essa finalidade, a pesquisa será exploratória, utilizando fontes 
+bibliográficas de duas áreas principais: a de tecnologia e a da saúde. Os artigos da 
+área da saúde oferecem embasamento anterior à utilização em massa das 
+inteligências artificiais, contribuindo para o referencial teórico do trabalho no que se 
+refere a fenômenos como o viés de automação e o avarento cognitivo, estudados 
+muito antes da popularização da IA. Esse referencial é desenvolvido em detalhe no 
+Capítulo 2.
 
-%\lstset{frame=Trbl,numbers=left}
-\begin{lstlisting}[caption={Exemplo de código fonte}, language=Python, label=code:oddoreven]
-	# Python program to check if the input number
-	# is odd or even.
-	# A number is even if division by 2 gives a
-	# remainder of 0.
-	# If the remainder is 1, it is an odd number.
-	
-	num = int(input("Enter a number: "))
-	if (num % 2) == 0:
-		print("{0} is Even".format(num))
-	else:
-		print("{0} is Odd".format(num))
-\end{lstlisting}	
+O método combina a revisão da literatura científica com estudos de caso, 
+realizados por meio da produção de código, tanto com ferramentas de inteligência 
+artificial quanto manualmente, pelos próprios autores, e da posterior análise de sua 
+qualidade. Para a avaliação qualitativa, adota-se uma noção de qualidade baseada 
+na norma ISO/IEC 25010, que define características claras de qualidade de código, 
+como:
+\begin{itemize}
+    \item \textbf{Adequação funcional:} O código realiza corretamente o objetivo para o qual foi escrito, considerando "border cases", casos de borda.
+    
+    \item \textbf{Confiabilidade:} O código comporta-se de maneira correta diante de entradas inesperadas ou erros sobre sistemas não controlados.
+    
+    \item \textbf{Manutenibilidade:} Legibilidade, modularidade, padrões de código.
+    
+    \item \textbf{Segurança:} Ausência de vulnerabilidades e de práticas inseguras, especialmente relevantes em código de baixo nível.
+\end{itemize}
 
+\section{Composição do corpus}
+O corpus da análise utilizará duas linguagens de programação distintas: C e 
+Javascript. A escolha se orienta pelos aspectos de segurança, complexidade e popularidade de cada linguagem, C é uma linguagem de baixo nível que exige 
+bastante conhecimento de tópicos complexos do programador, como disposição de 
+memória, utilização de bibliotecas do sistema e sistemas operacionais, sendo a 
+linguagem mais utilizada para programação de sistemas operacionais até hoje. 
+Javascript é uma linguagem amplamente utilizada hoje em desenvolvimento de 
+sistemas de alto nível como CRUDs e APIs, tem gerenciamento de memória 
+automático com garbage collector e é agnóstica de plataforma, funcionando da 
+mesma forma em todos os sistemas operacionais, tem tipagem dinâmica e seus 
+erros são geralmente relacionados a lógica.  
+Dessa forma tem-sê duas linguagens populares e distintas que expõem tipos 
+diferentes de defeito: em C, falhas de memória que ainda assim compilam e 
+executam; em Javascript, erros sutis de lógica. Essa diferença na facilidade de 
+encontrar erros é central para o fenômeno investigado, pois é dessa forma que o 
+viés de automação tende a se manifestar, quando o desenvolvedor aceita sem 
+questionar código aparentemente correto.
 
-\section{Análise dos Dados}
+\section{Procedimento de criação do código}
 
-
-\section{Cronograma}
-Visando atingir os objetivos propostos apresenta-se um cronograma
-de atividades a ser realizado. Estas atividades e o cronograma
-estão ilustrados nas tabelas \ref{tb:atividades} e
-\ref{fig:cronograma}, respectivamente.
-
-
-\begin{table}[!htb]
-	\centering
-	\caption{Atividades Previstas}\label{tb:atividades}
-	\begin{tabular}{cp{12cm}}
-		\hline \hline &\\[-0.4cm]
-		Atividades& \multicolumn{1}{c}{ Descrição} \\
-		\hline
-		&\\[-0.4cm]
-		\textbf{A} & Revisão bibliográfica. \\[0.2cm]
-		\textbf{B} &  Estudo de novas representações.\\[0.2cm]
-		\textbf{C} &  Aplicação dos algoritmos.\\[0.2cm]
-		\textbf{D} &  Desenvolvimento da interface. \\[0.2cm]
-		\textbf{E} &  Validação dos resultados.\\[0.2cm]
-		\textbf{F} &  Elaboração da monográfia.\\[0.2cm]
-		\textbf{G} &  Defesa.\\[0.2cm]
-		\hline \hline
-	\end{tabular}
-\end{table}
-
-%\begin{preview}
-%\centering
-
-\begin{figure}
-	\caption{Cronograma de Atividades}\label{fig:cronograma}
-	\begin{gantt}{10}{12}
-		\begin{ganttitle}
-			\numtitle{1}{1}{12}{1}
-		\end{ganttitle}
-		\ganttbar{Revisão da literatura}{0}{2}
-		\ganttbarcon{refinamento método}{2}{5}
-		\ganttbarcon{}{8}{2}
-		\ganttmilestone[color=cyan]{Milestone with color!}{4}
-		\ganttbar{another task}{2}{2}
-		\ganttbar[color=cyan]{another coloured task}{4}{4}
-		\ganttbar{another task}{4}{2}
-		\ganttcon{4}{5}{4}{7}
-		\ganttmilestonecon{A connected Milestone}{7}
-		\ganttbarcon{another consecutive task}{8}{2}
-	\end{gantt}
-	%\end{preview}
-	
-\end{figure}
-\section{Recursos}
-Descrever os recursos necessários para o desenvolvimento da pesquisa.
-\subsection{Recursos Humanos}
-\subsection{Recursos Físicos}
+A etapa empírica consiste na geração de código com ferramentas de IA e na 
+escrita manual de código pelos próprios autores deste trabalho, que serve como 
+base de comparação. Para garantir a reprodutibilidade, serão documentados: os 
+modelos utilizados e suas versões, a data de geração, os enunciados (prompts) e os 
+parâmetros de geração. 
+Serão apresentados os mesmos problemas para serem resolvidos em C e em 
+JavaScript, tanto com o código escrito manualmente quanto com o código gerado 
+por inteligência artificial, de modo a permitir a comparação entre as duas formas de 
+produção.

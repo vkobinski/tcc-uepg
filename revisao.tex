@@ -1,12 +1,128 @@
 \chapter{Revisão da Literatura}
-\citeonline{Moh06} desenvolveram um trabalho utilizando MD no qual o objetivo foi desenvolver modelos para classificação de doenças do arroz egípcio. Um dos algoritmos de aprendizagem utilizado foi a RNA. A RNA foi construída e treinada utilizando uma configuração de 52 entradas, 33 neurônios na camada oculta, 5 saídas, taxa de aprendizagem de 0.3, momento de 0.2 e 500 iterações. O modelo obtido para a previsão de doenças de arroz atingiu um índice de acerto de 96,4\% para o conjunto de dados de teste. Este resultado demonstra a grande eficiência da aplicação de RNAs.
 
-O processo de mineração de dados é ilustrado na Figura~\ref{fig:mineracao}.
-\begin{figure}
-	\centering
-	\caption{Etapas da mineração de dados}\label{fig:mineracao}
-	\includegraphics[scale=1.0]{mineracao}
-	
-\end{figure}
+Esta seção tem como objetivo abordar os fundamentos teóricos que 
+sustentam a pesquisa, divididos entre a capacidade técnica das ferramentas 
+generativas, o comportamento humano perante a automação e o impacto destas 
+tecnologias no fluxo de desenvolvimento. 
 
+\section{A capacidade técnica e os limites da IA na geração de código} 
 
+A introdução de Modelos de Linguagem de Grande Porte (LLMs) treinados 
+especificamente em vastos repositórios de código-fonte representou um marco na 
+automação do desenvolvimento de software. O estudo sobre o OpenAI Codex 
+\cite{chen2021} demonstrou que essas ferramentas possuem uma notável 
+eficiência na tradução rápida de especificações em linguagem natural para código. 
+No entanto, é fundamental distinguir a agilidade na geração da real eficácia 
+estrutural do código, isto é, a garantia de sua corretude e segurança funcional. Em 
+cenários de escopo isolado, como a criação de funções algorítmicas, o 
+desenvolvimento de scripts únicos ou a estruturação inicial de componentes de 
+interface, a inteligência artificial atinge altas taxas de acerto. Essa capacidade de 
+atuar como um autocompletar avançado acelerou a resolução de tarefas rotineiras.
+
+Contudo, a precisão observada em testes de laboratório limitados não se 
+traduz linearmente para ambientes de produção corporativos. A literatura atual 
+destaca uma distinção fundamental entre a correção sintática e a validade semântica 
+do código gerado. Modelos generativos frequentemente produzem blocos de código 
+que parecem corretos e muitas vezes compilam sem erros, mas que falham na 
+execução ou na lógica de negócio. Essa ineficiência ocorre através da invocação de 
+métodos inexistentes em determinadas versões de frameworks, importações de 
+bibliotecas depreciadas ou injeção de lógicas que desrespeitam o fluxo arquitetural 
+\cite{liu2023}. Essa limitação está fortemente atrelada à restrição de contexto 
+dos modelos, que ainda falham em manter a coerência quando a solução exige o 
+mapeamento simultâneo de dezenas de dependências espalhadas pelo projeto.
+
+O contraste entre o desempenho em escopos isolados e a engenharia de 
+software do mundo real se destaca em avaliações rigorosas, como o SWE-bench 
+\cite{jimenez2024}. Este teste avalia a capacidade da IA de resolver erros e 
+melhorias reais reportados na plataforma GitHub\footnote{O GitHub é uma plataforma colaborativa de hospedagem de código-fonte e controle de versão baseada no sistema Git, amplamente utilizada globalmente para o gerenciamento de repositórios e o desenvolvimento de software em equipe.}. Os resultados revelam que, ao 
+serem desafiadas a modificar bases de código legadas e interligadas, onde uma 
+alteração em um banco de dados relacional pode impactar diversas rotas de uma 
+API ou outras áreas de uma infraestrutura, as taxas de sucesso das IAs despencam 
+consideravelmente. A resolução de falhas estruturais exige não apenas a escrita de 
+novas linhas, mas a compreensão profunda do ecossistema do projeto, algo que as 
+ferramentas atuais não conseguem abstrair isoladamente. 
+
+Assim, embora as IAs generativas sejam ótimos assistentes, elas 
+estão longe de funcionar de maneira isolada e autônoma em arquiteturas de 
+sistemas complexos \cite{jimenez2024}. É indispensável a análise profunda e 
+a aplicação de testes para impedir que soluções estruturalmente falhas ou 
+vulnerabilidades sejam integradas ao ambiente de produção \cite{pearce2022, perry2023}.
+
+\section{O fator humano, viés de automação e segurança}
+A transição do papel do engenheiro de software, que gradativamente passa 
+de autor primário do código para revisor de soluções geradas por algoritmos, traz 
+implicações cognitivas profundas. A psicologia cognitiva descreve o cérebro humano 
+como um avarento cognitivo, um sistema que busca constantemente otimizar o esforço mental por meio de atalhos \cite{fiske1984}. Quando uma 
+ferramenta baseada em Inteligência Artificial fornece uma resposta estruturada e 
+sintaticamente atraente, ocorre o fenômeno conhecido como viés de automação. 
+Mosier e Skitka (1998) definem este viés como a tendência do indivíduo de utilizar a 
+sugestão de um sistema automatizado como uma substituição para a busca ativa e 
+vigilante de informações. Na prática, o desenvolvedor aceita a solução da máquina 
+como correta por padrão, diminuindo o rigor do questionamento e ignorando falhas 
+que seriam evidentes caso ele próprio estivesse a arquitetar o código desde o início.  
+
+Esse relaxamento do pensamento crítico agrava-se durante a etapa de 
+revisão de código. Revisar o código escrito por outro humano envolve compreender 
+a lógica, a intenção e o contexto de um raciocínio construído. Por outro lado, revisar 
+blocos maciços de código gerados instantaneamente por um LLM exige um nível 
+exaustivo de concentração para identificar lógicas invertidas ou complexas demais, 
+as chamadas “alucinações”, momentos em que a IA começa a gerar erros 
+contextuais \cite{liu2023}, ou falhas de integração com a arquitetura existente do 
+repositório \cite{jimenez2024}. Com o cansaço mental natural do processo de 
+desenvolvimento, a capacidade de o programador manter a atenção cai, resultando 
+em uma descarga cognitiva que afeta o pensamento crítico \cite{gerlich2025} e a 
+probabilidade de aprovar códigos que parecem funcionar superficialmente, mas 
+quebram em certos cenários específicos aumenta exponencialmente.
+
+As consequências deste comportamento para a segurança da informação 
+são alarmantes. Perry et al. (2023) investigaram a ilusão de segurança na adoção de assistentes de IA e 
+demonstraram em experimentos controlados que programadores com acesso a ferramentas generativas não apenas 
+tendem a produzir códigos com mais vulnerabilidades, mas também reportam uma 
+confiança significativamente maior de que os seus códigos estão corretos e seguros. 
+
+A literatura aponta que há também o risco da aversão ao uso da IA , e isto representa um desafio. 
+Caso o desenvolvedor presencie falhas  graves ou sucessivas geradas pela IA, ele pode desenvolver uma 
+aversão ao algoritmo, mesmo em momentos em que pode ser usada a seu favor de 
+maneira saudável \cite{dietvorst2015}.
+
+A intervenção humana diante das situações que ocorrem ao utilizar IA no 
+desenvolvimento de software de maneira displicente se torna um padrão necessário 
+no processo. A confiança excessiva e a descarga cognitiva comprometem 
+diretamente a eficácia da auditoria manual \cite{gerlich2025,mosier1998}.
+ Diminuir estes riscos exige que a avaliação qualitativa de código deixe de ser 
+uma leitura passiva \cite{pearce2022}  e passe a integrar metodologias de 
+validação rigorosas, partindo da premissa de que o código gerado por LLMs não é 
+confiável até que a sua segurança e lógica sejam provadas \cite{perry2023,liu2023}.
+
+\section{Impactos na produtividade e no mercado de trabalho}
+
+A integração de agentes de inteligência artificial generativa alterou
+substancialmente o trabalho do desenvolvedor de software. A transição da escrita
+manual para geração automatizada possibilitou um ganho imediato no volume de
+código produzido. Estudos empíricos demonstram que a adoção de ferramentas
+como o GitHub Copilot aumenta a velocidade de conclusão de tarefas e
+produtividade geral dos desenvolvedores \cite{peng2023}.
+
+Contudo, o aumento da produção de código não se traduz necessariamente
+em software seguro. Com a IA assumindo a codificação bruta quase que
+instantaneamente, o gargalo produtivo do mercado deslocou-se irreversivelmente da
+etapa de escrita para as etapas de revisão, integração e auditoria \cite{demirer2026}. Consequentemente, o mercado de trabalho passa a exigir
+um novo perfil analítico. O profissional deixa de ser valorizado estritamente pela sua
+capacidade de redigir algoritmos do zero e passa a ser exigido pela sua proficiência
+em auditar lógicas complexas e mapear integrações de arquitetura, evitando a
+aceitação passiva de código vulnerável.
+
+Em suma, a inteligência artificial e o esforço humano apresentam, segundo
+as análises de mercado, uma relação de forte complementaridade. Em vez de
+eliminar postos de trabalho, a tendência corporativa é a busca por profissionais que
+dominem a calibração dessas ferramentas e que atuem como validadores
+essenciais, assegurando que o ganho de velocidade no desenvolvimento não resulta
+na degradação da qualidade técnica e estrutural dos projetos a longo prazo \cite{demirer2026}.
+
+\section{Trabalhos relacionados e comparação metodológica}
+
+A avaliação da qualidade de código-fonte gerado por modelos de linguagem de grande escala tem sido objeto de diversas abordagens metodológicas na literatura recente. Estudos de base quantitativa, como o de \citeonline{liu2023}, fundamentam-se em \textit{benchmarks} automatizados, a exemplo do HumanEval, que mensuram a quão certeiros e corretos são os algoritmos em escopos isolados por meio de testes de unidade. 
+
+Aumentando o nível de complexidade, pesquisas como a de \citeonline{jimenez2024} propõem metodologias baseadas na resolução de problemas em ecossistemas reais. Utilizando o \textit{SWE-bench}, os autores testam a capacidade dos LLMs de solucionar \textit{issues} de repositórios do GitHub, focando em métricas de taxa de resolução automatizada de problemas interligados em bases de código legadas. Já no campo da segurança da informação, \citeonline{perry2023} e \citeonline{pearce2022} utilizam simulações experimentais com desenvolvedores e análise de código para catalogar a injeção quantitativa de vulnerabilidades estruturais (como injeção de SQL e estouro de \textit{buffer}).
+
+Embora a literatura existente forneça uma base sólida sobre a eficiência e as taxas de erro dessas ferramentas, grande parte dessas metodologias concentra-se em validações automatizadas ou em métricas estritamente quantitativas. Em contraste, a proposta adotada neste trabalho diferencia-se ao aplicar uma avaliação qualitativa humana ancorada nos critérios da norma ISO/IEC 25010 (Adequação Funcional, Confiabilidade, Manutenibilidade e Segurança). 
