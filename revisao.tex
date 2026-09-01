@@ -1,4 +1,4 @@
-\chapter{Revisão da Literatura}
+\chapter{O fator humano e avaliação do uso de LLMs}
 
 Esta seção tem como objetivo abordar os fundamentos teóricos que 
 sustentam a pesquisa, divididos entre a capacidade técnica das ferramentas 
@@ -49,75 +49,94 @@ a aplicação de testes para impedir que soluções estruturalmente falhas ou
 vulnerabilidades sejam integradas ao ambiente de produção \cite{pearce2022, perry2023}.
 
 \section{O fator humano, viés de automação e segurança}
-A transição do papel do engenheiro de software, que gradativamente passa 
-de autor primário do código para revisor de soluções geradas por algoritmos, traz 
-implicações cognitivas profundas. A psicologia cognitiva descreve o cérebro humano 
-como um avarento cognitivo, um sistema que busca constantemente otimizar o esforço mental por meio de atalhos \cite{fiske1984}. Quando uma 
-ferramenta baseada em Inteligência Artificial fornece uma resposta estruturada e 
-sintaticamente atraente, ocorre o fenômeno conhecido como viés de automação. 
-Mosier e Skitka (1998) definem este viés como a tendência do indivíduo de utilizar a 
-sugestão de um sistema automatizado como uma substituição para a busca ativa e 
-vigilante de informações. Na prática, o desenvolvedor aceita a solução da máquina 
-como correta por padrão, diminuindo o rigor do questionamento e ignorando falhas 
-que seriam evidentes caso ele próprio estivesse a arquitetar o código desde o início.  
+A transição do papel do engenheiro de software, que gradativamente deixa de ser o autor primário do código-fonte para atuar como revisor e integrador de soluções geradas por algoritmos, introduz implicações cognitivas profundas que impactam diretamente a segurança dos sistemas. Essa mudança de paradigma desloca a atividade de um esforço de produção material para uma atividade de julgamento e auditoria crítica, expondo limites intrínsecos da psicologia cognitiva humana.
 
-Esse relaxamento do pensamento crítico agrava-se durante a etapa de 
-revisão de código. Revisar o código escrito por outro humano envolve compreender 
-a lógica, a intenção e o contexto de um raciocínio construído. Por outro lado, revisar 
-blocos maciços de código gerados instantaneamente por um LLM exige um nível 
-exaustivo de concentração para identificar lógicas invertidas ou complexas demais, 
-as chamadas “alucinações”, momentos em que a IA começa a gerar erros 
-contextuais \cite{liu2023}, ou falhas de integração com a arquitetura existente do 
-repositório \cite{jimenez2024}. Com o cansaço mental natural do processo de 
-desenvolvimento, a capacidade de o programador manter a atenção cai, resultando 
-em uma descarga cognitiva que afeta o pensamento crítico \cite{gerlich2025} e a 
-probabilidade de aprovar códigos que parecem funcionar superficialmente, mas 
-quebram em certos cenários específicos aumenta exponencialmente.
+\subsection{O Modelo do Avarento Cognitivo e a Complacência na Revisão}
 
-As consequências deste comportamento para a segurança da informação 
-são alarmantes. Perry et al. (2023) investigaram a ilusão de segurança na adoção de assistentes de IA e 
-demonstraram em experimentos controlados que programadores com acesso a ferramentas generativas não apenas 
-tendem a produzir códigos com mais vulnerabilidades, mas também reportam uma 
-confiança significativamente maior de que os seus códigos estão corretos e seguros. 
+A psicologia social e cognitiva caracteriza o cérebro humano como um \textit{cognitive miser} (avarento cognitivo), um sistema de processamento de informações que busca constantemente otimizar o gasto de energia metabólica e mental por meio do uso de heurísticas e atalhos de julgamento \cite{fiske1984}. Conforme discutido por \citeonline{mosier1998}, diante de problemas complexos, os indivíduos naturalmente preferem a via de menor resistência cognitiva para mitigar o risco de sobrecarga de informações. 
 
-A literatura aponta que há também o risco da aversão ao uso da IA , e isto representa um desafio. 
-Caso o desenvolvedor presencie falhas  graves ou sucessivas geradas pela IA, ele pode desenvolver uma 
-aversão ao algoritmo, mesmo em momentos em que pode ser usada a seu favor de 
-maneira saudável \cite{dietvorst2015}.
+No contexto da engenharia de software, a interface de um assistente de IA generativa atua como um forte estímulo indutor desse comportamento. Ao fornecer de forma quase instantânea soluções de código sintaticamente elegantes, estruturadas e acompanhadas de comentários convincentes, a IA reduz drasticamente o esforço de busca inicial por informações. Esse cenário alimenta o que a literatura denomina complacência induzida pela automação \cite{mosier1998}. Se o desenvolvedor percebe a ferramenta como altamente confiável, ele reduz o monitoramento ativo e a vigilância na revisão do código, operando sob a premissa implícita de que a solução da máquina está correta \cite{mosier1998}.
 
-A intervenção humana diante das situações que ocorrem ao utilizar IA no 
-desenvolvimento de software de maneira displicente se torna um padrão necessário 
-no processo. A confiança excessiva e a descarga cognitiva comprometem 
-diretamente a eficácia da auditoria manual \cite{gerlich2025,mosier1998}.
- Diminuir estes riscos exige que a avaliação qualitativa de código deixe de ser 
-uma leitura passiva \cite{pearce2022}  e passe a integrar metodologias de 
-validação rigorosas, partindo da premissa de que o código gerado por LLMs não é 
-confiável até que a sua segurança e lógica sejam provadas \cite{perry2023,liu2023}.
+Essa complacência compromete de forma severa a revisão estrutural. Enquanto a leitura de um código escrito por outro programador humano exige um esforço para acompanhar uma linha de raciocínio lógico explícita, a revisão de blocos massivos gerados por modelos de linguagem de grande escala (LLMs) exige um nível exaustivo de concentração para identificar anomalias sutis. Entre essas falhas, destacam-se as alucinações semânticas, em que o modelo inventa parâmetros ou utiliza bibliotecas inexistentes \cite{liu2023}, e erros silenciosos de arquitetura que impedem a integração adequada no repositório de software \cite{jimenez2024}. Com o desgaste mental inerente ao processo, o desenvolvedor tende a realizar uma leitura passiva e superficial, aprovando códigos que funcionam no fluxo de execução, mas que falham categoricamente em cenários de borda.
 
-\section{Impactos na produtividade e no mercado de trabalho}
+\subsection{A Mecânica do Viés de Automação e a Difusão de Responsabilidade}
 
-A integração de agentes de inteligência artificial generativa alterou
-substancialmente o trabalho do desenvolvedor de software. A transição da escrita
-manual para geração automatizada possibilitou um ganho imediato no volume de
-código produzido. Estudos empíricos demonstram que a adoção de ferramentas
-como o GitHub Copilot aumenta a velocidade de conclusão de tarefas e
-produtividade geral dos desenvolvedores \cite{peng2023}.
+Esse relaxamento do pensamento crítico culmina no viés de automação, definido como a tendência sistemática de utilizar as diretrizes de um sistema automatizado como substituto para a busca e verificação ativa de dados \cite{mosier1998}. Na engenharia de software assistida por IA, esse viés manifesta-se através de duas classes fundamentais de falhas empíricas:
 
-Contudo, o aumento da produção de código não se traduz necessariamente
-em software seguro. Com a IA assumindo a codificação bruta quase que
-instantaneamente, o gargalo produtivo do mercado deslocou-se irreversivelmente da
-etapa de escrita para as etapas de revisão, integração e auditoria \cite{demirer2026}. Consequentemente, o mercado de trabalho passa a exigir
-um novo perfil analítico. O profissional deixa de ser valorizado estritamente pela sua
-capacidade de redigir algoritmos do zero e passa a ser exigido pela sua proficiência
-em auditar lógicas complexas e mapear integrações de arquitetura, evitando a
-aceitação passiva de código vulnerável.
+\begin{itemize}
+    \item Erros de Omissão: Ocorrem quando o desenvolvedor deixa de identificar uma vulnerabilidade ou bug estrutural no código simplesmente porque a ferramenta generativa não emitiu alertas ou porque o programa compilou sem erros explícitos de sintaxe \cite{mosier1998}. O operador assume complacentemente que a ausência de sinalização negativa equivale à correção funcional e de segurança.
+    \item Erros de Comissão: Ocorrem quando o desenvolvedor ativamente aceita, integra e coloca em produção uma solução sugerida pela IA que contém falhas graves ou vulnerabilidades de segurança (como injeção de SQL ou estouro de buffer), mesmo dispondo de meios e conhecimentos técnicos suficientes para identificar o erro se realizasse uma auditoria detalhada \cite{mosier1998}.
+\end{itemize}
 
-Em suma, a inteligência artificial e o esforço humano apresentam, segundo
-as análises de mercado, uma relação de forte complementaridade. Em vez de
-eliminar postos de trabalho, a tendência corporativa é a busca por profissionais que
-dominem a calibração dessas ferramentas e que atuem como validadores
-essenciais, assegurando que o ganho de velocidade no desenvolvimento não resulta
-na degradação da qualidade técnica e estrutural dos projetos a longo prazo \cite{demirer2026}.
+Um fator psicológico agravante na gênese desses erros é a difusão ou abdicação de responsabilidade \cite{mosier1998}. À medida que os sistemas computacionais assumem o papel de agentes ativos na geração de código, os desenvolvedores humanos passam a experimentar uma diluição da percepção de autoria e responsabilidade individual sobre as consequências da falha \cite{mosier1998}. Sentindo-se respaldados pela "autoridade técnica" de uma IA com reputação de alta capacidade, os profissionais tendem a relegar o papel de validador final, assumindo que a responsabilidade pela corretude do software foi transferida, em algum grau, para o algoritmo \cite{mosier1998}.
+
+\subsection{Viés de Automação versus Aversão a Algoritmos}
+
+Paralelamente, a relação de confiança entre o desenvolvedor e o assistente de programação é tensionada por um comportamento polarizado. Ao mesmo tempo em que a dependência cega é comum, o fenômeno inverso, conhecido como aversão a algoritmos, também se manifesta de forma marcante \cite{dietvorst2015}. 
+
+De acordo com as descobertas de \citeonline{dietvorst2015}, os seres humanos tendem a perder a confiança em previsores ou assistentes algorítmicos de maneira significativamente mais rápida do que em assistentes humanos ao presenciarem o mesmo erro. Mesmo quando um algoritmo demonstra cientificamente possuir uma precisão ou taxa de sucesso superior à humana, a observação de uma única falha crassa (como uma sugestão de código com lógica absurda ou loops infinitos) faz com que a confiança do usuário despenque vertiginosamente \cite{dietvorst2015}. 
+
+Isso estabelece um espectro disfuncional na engenharia de software contemporânea: por um lado, desenvolvedores novatos e pressionados por prazos de entrega podem cair no viés de automação, integrando silenciosamente dezenas de vulnerabilidades em seus projetos \cite{pearce2022}; por outro, desenvolvedores experientes, ao se depararem com alucinações gritantes da IA, podem desenvolver uma aversão injustificada, rejeitando completamente a ferramenta e abrindo mão de ganhos reais de produtividade temporal na escrita de rotinas repetitivas \cite{peng2023}. A calibração equilibrada e saudável dessa confiança surge, portanto, como um desafio crítico para a área.
+
+\subsection{Descarga Cognitiva e Dependência Teológica da IA}
+
+O uso continuado e acrítico de assistentes virtuais de código promove o que a psicologia cognitiva conceitua como descarga cognitiva, que consiste na delegação intencional de processos mentais internos (como memória de trabalho, raciocínio lógico e tomada de decisão) para dispositivos e suportes físicos ou digitais externos \cite{gerlich2025, georgiou2025}. 
+
+Os impactos desse processo no desenvolvimento intelectual foram mensurados estatisticamente por \citeonline{gerlich2025}. A pesquisa revelou uma correlação fortemente positiva entre a frequência de uso de ferramentas de IA e a tendência à descarga cognitiva ($r = 0,72$), acompanhada de uma expressiva correlação negativa entre a descarga cognitiva e as habilidades de pensamento crítico ($r = -0,75$) \cite{gerlich2025}. Esse feedback fomenta uma dependência cognitiva crônica, na qual o desenvolvedor perde a capacidade de formular e depurar de forma autônoma lógicas complexas e de nível conceitual elevado, uma vez que sua musculatura cognitiva atrofia pela falta de exercício rotineiro da prática de programação estrutural.
+
+Complementando esse diagnóstico, os testes randomizados controlados conduzidos por \citeonline{georgiou2025} demonstraram que o uso de ferramentas generativas (como o ChatGPT) resulta em reduções drásticas nas pontuações de esforço mental, processamento cognitivo profundo e pensamento estratégico. O aspecto mais crítico evidenciado por \citeonline{georgiou2025} foi a persistência do efeito de atrofia mental: mesmo após a remoção completa do assistente de inteligência artificial das sessões de testes, os participantes que haviam sido auxiliados continuaram a apresentar pontuações de desempenho cognitivo significativamente inferiores aos do grupo de controle. Isso sugere que a descarga cognitiva sistemática gera uma espécie de inércia ou "preguiça mental"  residual, cujos efeitos se estendem para além do momento de utilização direta do software gerador.
+
+\subsection{A Transição de Papel: Da Execução à Curadoria}
+
+Diante dessas dinâmicas cognitivas, a natureza da atividade profissional em si está sendo redefinida. Conforme investigado por \citeonline{lee2025}, a inteligência artificial desloca o trabalhador do conhecimento da função tradicional de executor de tarefas para a função de curador ou administrador de tarefas. 
+
+Nesse novo arranjo de curadoria, o esforço do programador deixa de focar na digitação bruta da sintaxe e se concentra em três novas frentes cognitivas: a formação e refinamento de objetivos, a verificação rigorosa das informações retornadas pelo modelo e a integração coerente dessas soluções parciais na arquitetura global do sistema \cite{lee2025}. Contudo, \citeonline{lee2025} apontam que esse processo de curadoria é diretamente afetado pela calibração de dois tipos de confiança:
+
+\begin{itemize}
+    \item Confiança na IA: Quando o usuário possui um nível excessivo de confiança nas capacidades da IA generativa, há uma redução correspondente no esforço de pensamento crítico investido, induzindo-o à aceitação cega e barata de soluções aquém do padrão ideal \cite{lee2025}.
+    \item Autoconfiança do Usuário: Programadores que apresentam alta autoconfiança em suas próprias habilidades técnicas e conhecimentos de domínio tendem a investir um esforço significativamente maior na avaliação, refinamento e modificação das sugestões da máquina \cite{lee2025}.
+\end{itemize}
+
+Dessa forma, o desenvolvimento de uma sólida formação técnica em Engenharia de Computação emerge como o único elemento de proteção eficaz contra o viés de automação. Somente um profissional que possui competência técnica e autoconfiança estruturada para operar como um auditor crítico e independente é capaz de exercer a curadoria de forma segura, garantindo que os ganhos de produtividade e velocidade fornecidos pela inteligência artificial não cobrem seu preço na forma de software inseguro e frágil.
+
+
+\section{IMPACTOS NA PRODUTIVIDADE E NO MERCADO DE TRABALHO}
+
+A introdução de assistentes de Inteligência Artificial generativa no fluxo produtivo corporativo desencadeou uma das transformações mais rápidas da história da engenharia de software. O apelo comercial e gerencial dessas ferramentas assenta-se na promessa de eliminação de atritos operacionais e na aceleração drástica da entrega de produtos digitais. Todavia, a análise científica desse fenômeno revela que o incremento quantitativo na velocidade de produção impõe novos e complexos desafios qualitativos ao ecossistema de desenvolvimento de software.
+
+\subsection{O Ganho de Velocidade Empírico e a Economia do Desenvolvimento}
+
+A quantificação rigorosa do ganho de produtividade proporcionado pelas ferramentas generativas de código-fonte foi estabelecida de maneira pioneira pelo ensaio clínico controlado randomizado conduzido por \citeonline{peng2023}. O estudo utilizou uma infraestrutura experimental robusta no mercado de trabalho real, recrutando 95 programadores \textit{freelancers} ativos na plataforma internacional Upwork \cite{peng2023}.
+
+O arranjo do experimento dividiu aleatoriamente os programadores em dois blocos homogêneos: um grupo de tratamento composto por 45 engenheiros com acesso ao assistente GitHub Copilot e um grupo de controle com 50 profissionais desenvolvendo de forma manual \cite{peng2023}. A tarefa padronizada consistiu na implementação de um servidor HTTP básico em JavaScript (Node.js) que deveria processar requisições, interagir com o sistema de arquivos local e retornar códigos de estado apropriados, sendo avaliado dinamicamente por uma suíte inflexível de 12 testes unitários hospedados via GitHub Classroom \cite{peng2023}.
+
+Os resultados empíricos revelaram que o grupo assistido concluiu a tarefa com uma velocidade 55,8\% superior em comparação com o grupo de controle \cite{peng2023}. Em termos de tempo mediano de execução, os desenvolvedores sob tratamento necessitaram de apenas 71,1 minutos para submeter um sistema livre de erros lógicos na suíte de testes, contra uma mediana de 160,9 minutos do grupo desprovido de assistência \cite{peng2023}. Adicionalmente, \citeonline{peng2023} identificaram diferenças estatísticas relevantes: os maiores ganhos relativos de produtividade temporal foram observados em programadores menos experientes em JavaScript, desenvolvedores de faixas etárias mais elevadas e indivíduos que possuíam rotinas diárias com maior carga horária de dedicação à escrita de código, evidenciando o papel da IA como um catalisador de equalização técnica de gargalos operacionais.
+
+Sob a perspectiva macroeconômica, os impactos dessa aceleração produtiva são profundos. Conforme destacado por \citeonline{peng2023}, apenas nos Estados Unidos, em 2021, mais de 4,6 milhões de profissionais atuavam em ocupações matemáticas e de computação, gerando uma folha de pagamentos anual da ordem de US\$ 464,8 bilhões (aproximadamente 2\% do Produto Interno Bruto norte-americano). A extrapolação de um ganho sistemático de 55,8\% de velocidade produtiva para essa população de trabalhadores do conhecimento projeta economias de custos massivas para as organizações e um estímulo substancial ao crescimento do PIB global \cite{peng2023}.
+
+\subsection{A Transição de Paradigma: Da Execução à Curadoria}
+
+Apesar dos evidentes ganhos quantitativos de velocidade na geração bruta de caracteres e blocos de código, a natureza intrínseca do trabalho do engenheiro de software sofreu uma mudança estrutural de paradigma. Conforme detalhado por \citeonline{lee2025} a partir de um estudo empírico com mais de 300 profissionais do conhecimento, as tecnologias baseadas em IA generativa deslocam o ser humano do papel tradicional de executor de tarefas para a função de administrador ou curador de tarefas.
+
+No modelo clássico de execução de tarefas, o desenvolvedor despende a maior fração de sua energia cognitiva na tradução manual de requisitos lógicos para construções sintáticas específicas de uma linguagem de programação. No modelo de curadoria, esse fluxo de trabalho é reestruturado em três macroetapas cognitivas complementares:
+
+\begin{enumerate}
+    \item Formulação e Especificação de Objetivos:  Definir, estruturar e refinar os prompts de entrada enviados ao modelo, traduzindo as restrições da arquitetura de software de forma clara e compreensível para a IA \cite{lee2025};
+    \item Verificação e Auditoria Crítica: Realizar uma revisão exaustiva e de caixa-branca sobre as soluções propostas pelas ferramentas generativas, identificando bugs lógicos, erros de tratamento de limites e brechas de segurança \cite{lee2025};
+    \item Integração de Respostas: Acoplar de maneira coesa e funcional as soluções de código parciais geradas pela IA no ecossistema e repositório de software legado, garantindo a ausência de regressões lógicas \cite{lee2025, jimenez2024}.
+\end{enumerate}
+
+Essa redefinição do papel profissional é caracterizada por uma complexa tensão psicológica e técnica. \citeonline{lee2025} demonstraram empiricamente que a utilização da IA generativa reduz significativamente o esforço mental percebido em atividades rotineiras de levantamento de dados e escrita preliminar. Contudo, esse alívio operacional gera uma tendência severa de excesso de confiança e dependência da tecnologia \cite{lee2025}. 
+
+O elemento crítico que define o sucesso do modelo de curadoria reside na calibração de dois vetores opostos de confiança identificados no estudo de \citeonline{lee2025}: o nível de confiança depositado na ferramenta de inteligência artificial versus a autoconfiança técnica do usuário. O estudo estatístico revelou que uma alta confiança na IA correlaciona-se diretamente com uma diminuição drástica no rigor do monitoramento humano, induzindo o desenvolvedor a omitir etapas vitais de validação do código \cite{lee2025}. Por outro lado, profissionais que apresentam níveis robustos de autoconfiança técnica mantêm um engajamento crítico ativo, investindo esforço cognitivo substancial para revisar, refinar e testar as sugestões entregues pela máquina \cite{lee2025}.
+
+\subsection{O Paradoxo Produtividade-Qualidade e os Desafios do Mercado}
+
+Essa dinâmica introduz o que a engenharia de software clássica conceitua como o paradoxo da produtividade-qualidade assistida por inteligência artificial. Se, sob o ponto de vista quantitativo, o GitHub Copilot e assistentes similares conseguem reduzir pela metade o tempo de codificação de uma rotina funcional isolada \cite{peng2023}, sob a ótica qualitativa, a pressa mercadológica para usufruir dessa aceleração temporal pode atuar como um gargalo destrutivo para a robustez dos sistemas digitais.
+
+A geração quase instantânea de código em larga escala satura o ecossistema com um volume sem precedentes de patches e arquivos de software \cite{jimenez2024}. À medida que o tempo dedicado à escrita diminui em 55,8\% \cite{peng2023}, as etapas subsequentes de revisão de código, auditoria de segurança e integração contínua passam a sofrer uma pressão temporal desproporcional. Em ambientes corporativos pautados por cronogramas agressivos, a diluição do tempo disponível para a reflexão profunda estimula o viés de automação \cite{mosier1998}: o revisor humano, sobrecarregado pela velocidade de geração, tende a realizar análises superficiais de caixa-preta, confiando na aparência estética e no sucesso de testes funcionais superficiais.
+
+Como consequência desse descompasso operativo, o mercado de trabalho de engenharia de software passa a exigir um novo patamar de qualificação técnica para o profissional contemporâneo. O desenvolvedor perde relevância se for estritamente um digitador de sintaxe  e ganha valor estratégico por sua capacidade de atuar como um auditor técnico e independente de alta performance \cite{lee2025}.
 
 \section{Trabalhos relacionados e comparação metodológica}
 
@@ -125,7 +144,7 @@ A avaliação da qualidade de código-fonte gerado por modelos de linguagem de g
 
 Aumentando o nível de complexidade, pesquisas como a de \citeonline{jimenez2024} propõem metodologias baseadas na resolução de problemas em ecossistemas reais. Utilizando o \textit{SWE-bench}, os autores testam a capacidade dos LLMs de solucionar \textit{issues} de repositórios do GitHub, focando em métricas de taxa de resolução automatizada de problemas interligados em bases de código legadas. Já no campo da segurança da informação, \citeonline{perry2023} e \citeonline{pearce2022} utilizam simulações experimentais com desenvolvedores e análise de código para catalogar a injeção quantitativa de vulnerabilidades estruturais (como injeção de SQL e estouro de \textit{buffer}).
 
-Embora a literatura existente forneça uma base sólida sobre a eficiência e as taxas de erro dessas ferramentas, grande parte dessas metodologias concentra-se em validações automatizadas ou em métricas estritamente quantitativas. Em contraste, a proposta adotada neste trabalho diferencia-se ao aplicar uma avaliação qualitativa humana ancorada nos critérios da norma ISO/IEC 25010 (Adequação Funcional, Confiabilidade, Manutenibilidade e Segurança). 
+Embora a literatura existente forneça uma base sólida sobre a eficiência e as taxas de erro dessas ferramentas, grande parte dessas metodologias concentra-se em validações automatizadas ou em métricas estritamente quantitativas. Em contraste, a proposta adotada neste trabalho diferencia-se ao aplicar uma avaliação qualitativa humana ancorada nos critérios da norma ISO/IEC 25010. 
 
 
 A avaliação científica dos limites das ferramentas generativas de código-fonte desenvolveu-se recentemente sob diferentes metodologias, conforme sumarizado no Quadro 1.
@@ -161,8 +180,8 @@ O estudo de \citeonline{liu2023} fundamenta-se no diagnóstico de que os benchma
 
 Para solucionar esse problema e revelar a real capacidade de programação das ferramentas, os autores construíram o framework \textit{EvalPlus} para expandir o benchmark original para o \textit{HumanEval+}, elevando a escala de casos de teste em 80 vezes (alcançando uma média de 764,1 testes por tarefa). O delineamento experimental deste estudo utilizou um pipeline híbrido composto por duas etapas principais:
 \begin{enumerate}
-    \item \textbf{Geração de Seeds via LLM (ChatGPT):} O modelo foi instruído a realizar uma análise de caixa-branca sobre o código de gabarito de cada uma das 164 tarefas do benchmark, extraindo seus tipos, formatos e restrições semânticas para propor cerca de 30 entradas de teste altamente refinadas focadas em condições de erro.
-    \item \textbf{Mutação de Entradas Baseada em Tipos:} A partir das sementes de alta qualidade geradas pelo ChatGPT, o framework executou uma rotina de testes mutativos recursivos sobre as estruturas de dados de entrada (como incremento/decremento de inteiros, manipulação de limites em cadeias de caracteres e alteração estrutural em dicionários e listas). Para evitar falhas lógicas e falsos-positivos na execução, foram aplicados contratos de programa para filtrar entradas inválidas antes de submetê-las ao teste.
+    \item Geração de Seeds via LLM (ChatGPT): O modelo foi instruído a realizar uma análise de caixa-branca sobre o código de gabarito de cada uma das 164 tarefas do benchmark, extraindo seus tipos, formatos e restrições semânticas para propor cerca de 30 entradas de teste altamente refinadas focadas em condições de erro.
+    \item Mutação de Entradas Baseada em Tipos: A partir das sementes de alta qualidade geradas pelo ChatGPT, o framework executou uma rotina de testes mutativos recursivos sobre as estruturas de dados de entrada (como incremento/decremento de inteiros, manipulação de limites em cadeias de caracteres e alteração estrutural em dicionários e listas). Para evitar falhas lógicas e falsos-positivos na execução, foram aplicados contratos de programa para filtrar entradas inválidas antes de submetê-las ao teste.
 \end{enumerate}
 
 A validação final ocorreu por meio de testes diferenciais , comparando o comportamento de 26 modelos de linguagem comerciais e de código aberto frente às respostas de gabarito estruturadas. Para agilizar o processo de teste sem perder eficácia, os autores formularam o \textit{HumanEval+-Mini} aplicando um algoritmo de otimização de cobertura de conjunto  focado em três métricas: cobertura de ramificação, eliminação de mutantes lógicos inseridos artificialmente no gabarito e falha empírica de amostras de modelos. Esse processo destilou a suíte para uma média compacta de 16,1 testes por tarefa, preservando a capacidade de detecção de defeitos.
@@ -175,9 +194,9 @@ O trabalho de \citeonline{jimenez2024} parte da premissa de que a engenharia de 
 
 A metodologia de construção e validação dos dados baseou-se em um pipeline automatizado de três etapas:
 \begin{enumerate}
-    \item \textbf{Raspagem e Seleção:} Extração de aproximadamente 90.000 PRs mescladas das bases do GitHub, filtrando aquelas que resolveram de forma clara um ticket de bug e que alteraram arquivos de teste associados.
-    \item \textbf{Delineamento do Harness de Execução Hermético:} Para cada problema, o framework isolou o ambiente em contêineres e instalou a base de código correspondente no commit de referência anterior à correção humana. 
-    \item \textbf{Filtro por Execução Dinâmica:} Os testes de unidade do próprio repositório foram executados antes e depois da aplicação do patch histórico do desenvolvedor. A tarefa só foi incluída no dataset final se apresentou comportamento de transição dinâmico (\textit{fail-to-pass} - F2P), onde pelo menos um teste de unidade passou a funcionar após a inserção do código de correção, excluindo cenários com falhas de instalação ou dependências inacessíveis.
+    \item Raspagem e Seleção: Extração de aproximadamente 90.000 PRs mescladas das bases do GitHub, filtrando aquelas que resolveram de forma clara um ticket de bug e que alteraram arquivos de teste associados.
+    \item Delineamento do Harness de Execução Hermético: Para cada problema, o framework isolou o ambiente em contêineres e instalou a base de código correspondente no commit de referência anterior à correção humana. 
+    \item Filtro por Execução Dinâmica: Os testes de unidade do próprio repositório foram executados antes e depois da aplicação do patch histórico do desenvolvedor. A tarefa só foi incluída no dataset final se apresentou comportamento de transição dinâmico (\textit{fail-to-pass} - F2P), onde pelo menos um teste de unidade passou a funcionar após a inserção do código de correção, excluindo cenários com falhas de instalação ou dependências inacessíveis.
 \end{enumerate}
 
 No ensaio de avaliação, os modelos recebiam apenas a descrição em texto do problema e o acesso à árvore do projeto. Devido aos limites de janela de contexto das redes, o experimento testou abordagens baseadas em recuperação esparsa (BM25) para delimitar as linhas de arquivos de interesse em blocos de até 27.000 tokens, além de um cenário de controle idealizado no qual apenas os arquivos realmente editados na solução humana foram fornecidos. O modelo gerava um arquivo de patch unificado (\textit{.patch}) que era injetado e executado contra os testes originais da suíte e mais 51 testes adicionais de preservação funcional (\textit{pass-to-pass} - P2P).
@@ -190,9 +209,9 @@ Visando caracterizar o potencial de risco de segurança na adoção cega de ferr
 
 O arranjo experimental estruturou-se sob a criação de 89 cenários sintéticos de desenvolvimento (\textit{prompts} parciais incompletos) projetados de modo que uma conclusão meramente lógica ou funcional induzisse o assistente à injeção de vulnerabilidades graves. O experimento analisou um montante de 1.689 programas gerados ao longo de três eixos fundamentais:
 \begin{enumerate}
-    \item \textbf{Diversidade de Fraquezas (DOW):} Consistiu no desenvolvimento de 54 cenários focados em 18 falhas do ranking CWE Top 25 (como estouro de buffer CWE-787, Cross-Site Scripting CWE-79 e Path Traversal CWE-22) utilizando as linguagens de programação C e Python.
-    \item \textbf{Diversidade de Prompts (DOP):} Avaliou o comportamento dinâmico do modelo frente a alterações cosméticas e estruturais na escrita do prompt de controle para injeção de SQL (CWE-89), incluindo variações de metadados como autoria de código, comentários de documentação e ordem de parâmetros de execução.
-    \item \textbf{Diversidade de Domínio (DOD):} Investigou a extrapolação do assistente para domínios industriais menos recorrentes em sua base de dados de treinamento, instanciando 18 cenários lógicos voltados ao desenvolvimento de hardware em descrição RTL (\textit{Register-Transfer Level}) por meio da linguagem Verilog (focando em 6 CWEs específicos de hardware).
+    \item Diversidade de Fraquezas (DOW): Consistiu no desenvolvimento de 54 cenários focados em 18 falhas do ranking CWE Top 25 (como estouro de buffer CWE-787, Cross-Site Scripting CWE-79 e Path Traversal CWE-22) utilizando as linguagens de programação C e Python.
+    \item Diversidade de Prompts (DOP): Avaliou o comportamento dinâmico do modelo frente a alterações cosméticas e estruturais na escrita do prompt de controle para injeção de SQL (CWE-89), incluindo variações de metadados como autoria de código, comentários de documentação e ordem de parâmetros de execução.
+    \item Diversidade de Domínio (DOD): Investigou a extrapolação do assistente para domínios industriais menos recorrentes em sua base de dados de treinamento, instanciando 18 cenários lógicos voltados ao desenvolvimento de hardware em descrição RTL (\textit{Register-Transfer Level}) por meio da linguagem Verilog (focando em 6 CWEs específicos de hardware).
 \end{enumerate}
 
 Para a avaliação de segurança do material gerado, os autores empregaram a suíte comercial de análise estática CodeQL da GitHub configurada especificamente para identificar cada fraqueza sintática isolada nos arquivos de software compiláveis de C e scripts de Python, complementando o processo com auditoria de segurança estritamente manual conduzida pelos próprios autores para falhas arquiteturais complexas e para os cenários em Verilog.
@@ -205,9 +224,9 @@ O trabalho de \citeonline{perry2023} destaca-se como a pesquisa pioneira no estu
 
 A arquitetura metodológica do experimento estruturou-se sob as seguintes definições:
 \begin{itemize}
-    \item \textbf{Composição de Participantes:} Recrutamento de 47 participantes de espectros variados de competência, desde estudantes universitários de ciência da computação até engenheiros de software profissionais com atuação de mercado.
-    \item \textbf{Desenvolvimento do Instrumento de Estudo (UI):} Os cientistas programaram um ambiente de desenvolvimento integrado (IDE) autônomo e customizado construído sob as bibliotecas React, Redux e Electron. A interface para o grupo experimental continha uma aba de assistência integrada na qual os participantes podiam interagir de forma flexível com o modelo de IA através de buscas em linguagem natural, além de modificar manualmente os hiperparâmetros de inferência como temperatura (diversidade lúdica da saída) e comprimento máximo do bloco gerado. O grupo de controle, por sua vez, resolveu as tarefas utilizando apenas uma janela do navegador de internet para consultas gerais.
-    \item \textbf{Casos de Uso de Segurança Práticos:} Os desenvolvedores foram desafiados a codificar 5 rotinas de software sensíveis distribuídas em C, JavaScript e Python: (Q1) Cifragem simétrica de arquivos com biblioteca AES; (Q2) Assinatura eletrônica de mensagens com algoritmo ECDSA; (Q3) Tratamento de controle de acesso de diretório local restrito; (Q4) Execução de consultas SQL parametrizadas para evitar injeção de dados; (Q5) Codificação de rotina de conversão de tipos de variáveis numéricas inteiras para caracteres com ponteiros manuais em linguagem C.
+    \item Composição de Participantes: Recrutamento de 47 participantes de espectros variados de competência, desde estudantes universitários de ciência da computação até engenheiros de software profissionais com atuação de mercado.
+    \item Desenvolvimento do Instrumento de Estudo (UI): Os cientistas programaram um ambiente de desenvolvimento integrado (IDE) autônomo e customizado construído sob as bibliotecas React, Redux e Electron. A interface para o grupo experimental continha uma aba de assistência integrada na qual os participantes podiam interagir de forma flexível com o modelo de IA através de buscas em linguagem natural, além de modificar manualmente os hiperparâmetros de inferência como temperatura (diversidade lúdica da saída) e comprimento máximo do bloco gerado. O grupo de controle, por sua vez, resolveu as tarefas utilizando apenas uma janela do navegador de internet para consultas gerais.
+    \item Casos de Uso de Segurança Práticos: Os desenvolvedores foram desafiados a codificar 5 rotinas de software sensíveis distribuídas em C, JavaScript e Python: (Q1) Cifragem simétrica de arquivos com biblioteca AES; (Q2) Assinatura eletrônica de mensagens com algoritmo ECDSA; (Q3) Tratamento de controle de acesso de diretório local restrito; (Q4) Execução de consultas SQL parametrizadas para evitar injeção de dados; (Q5) Codificação de rotina de conversão de tipos de variáveis numéricas inteiras para caracteres com ponteiros manuais em linguagem C.
 \end{itemize}
 
 O monitoramento do ensaio coletou de forma contínua dados detalhados de telemetria das consultas enviadas ao modelo Codex, o histórico de alterações incrementais nas caixas de texto, alterações de temperatura, gravações de áudio e captação de vídeo de tela das sessões de codificação. A avaliação de segurança e conformidade de cada código entregue foi conduzida de forma independente por dois avaliadores especializados, medindo a confiabilidade através da correlação Kappa de Cohen (que variou de 0,7 a 0,96 para corretude de lógica e 0,68 a 0,88 para segurança).
@@ -220,10 +239,10 @@ A pesquisa de \citeonline{peng2023} afasta-se da análise estrita de vulnerabili
 
 A metodologia e o ecossistema do ensaio basearam-se nas seguintes frentes técnicas:
 \begin{itemize}
-    \item \textbf{Amostragem de Desenvolvedores:} Recrutamento controlado de 95 programadores freelancers ativos localizados na plataforma internacional de prestação de serviços Upwork. Todos assinaram contratos digitais rígidos de confidencialidade e conformidade de ensaios comportamentais estruturados.
-    \item \textbf{Formulação de Grupo e Randomização:} Os participantes foram divididos de forma aleatória em um grupo de tratamento composto por 45 engenheiros de software (que receberam acesso de licença temporária ao GitHub Copilot acompanhado de um vídeo explicativo de 1 minuto detalhando o uso de complementação contextual) e um grupo de controle composto por 50 engenheiros (que desenvolveram o sistema sem acesso ao recurso gerador, permitindo o uso de documentação técnica, Stack Overflow e ferramentas normais de busca).
-    \item \textbf{Tarefa de Software Controlada:} Os participantes foram instruídos a programar, no menor intervalo temporal possível, um servidor HTTP básico em JavaScript (Node.js). A tarefa exigiu a recepção de conexões locais, análise estrutural de cabeçalhos de requisição de arquivos, validação de códigos de retorno de estado (como retornos HTTP de erros 404, 400 ou 405) e manipulação estruturada do sistema de arquivos físico do computador.
-    \item \textbf{Rastreabilidade Dinâmica via GitHub Classroom:} A tarefa foi disponibilizada por meio de ramificações individuais privadas criadas dinamicamente na plataforma educacional da GitHub. O sistema computava o instante exato de criação do repositório como marca temporal de início de execução. A integridade lógica das submissões era avaliada por uma suíte interna de 12 testes de validação funcionais inflexíveis e imutáveis inseridos no projeto. O intervalo total gasto pelo desenvolvedor foi indexado com precisão milimétrica a partir do momento de criação até a gravação e push da primeira submissão que passou com 100\% de aproveitamento nos 12 testes funcionais da pipeline.
+    \item Amostragem de Desenvolvedores: Recrutamento controlado de 95 programadores freelancers ativos localizados na plataforma internacional de prestação de serviços Upwork. Todos assinaram contratos digitais rígidos de confidencialidade e conformidade de ensaios comportamentais estruturados.
+    \item Formulação de Grupo e Randomização: Os participantes foram divididos de forma aleatória em um grupo de tratamento composto por 45 engenheiros de software (que receberam acesso de licença temporária ao GitHub Copilot acompanhado de um vídeo explicativo de 1 minuto detalhando o uso de complementação contextual) e um grupo de controle composto por 50 engenheiros (que desenvolveram o sistema sem acesso ao recurso gerador, permitindo o uso de documentação técnica, Stack Overflow e ferramentas normais de busca).
+    \item Tarefa de Software Controlada: Os participantes foram instruídos a programar, no menor intervalo temporal possível, um servidor HTTP básico em JavaScript (Node.js). A tarefa exigiu a recepção de conexões locais, análise estrutural de cabeçalhos de requisição de arquivos, validação de códigos de retorno de estado (como retornos HTTP de erros 404, 400 ou 405) e manipulação estruturada do sistema de arquivos físico do computador.
+    \item Rastreabilidade Dinâmica via GitHub Classroom: A tarefa foi disponibilizada por meio de ramificações individuais privadas criadas dinamicamente na plataforma educacional da GitHub. O sistema computava o instante exato de criação do repositório como marca temporal de início de execução. A integridade lógica das submissões era avaliada por uma suíte interna de 12 testes de validação funcionais inflexíveis e imutáveis inseridos no projeto. O intervalo total gasto pelo desenvolvedor foi indexado com precisão milimétrica a partir do momento de criação até a gravação e push da primeira submissão que passou com 100\% de aproveitamento nos 12 testes funcionais da pipeline.
 \end{itemize}
 
 Os resultados do experimento controlado demonstraram um efeito expressivo: o grupo de tratamento que desenvolveu o servidor HTTP sob o suporte direto do GitHub Copilot concluiu a tarefa com uma velocidade 55,8\% superior em comparação com o grupo de controle. Em termos de mediana de tempo, os desenvolvedores assistidos necessitaram de apenas 71,1 minutos para fechar o sistema sem erros lógicos nos testes, enquanto os programadores desprovidos da ferramenta precisaram de 160,9 minutos. O estudo também apontou efeitos de heterogeneidade: os ganhos relativos de tempo foram proporcionalmente maiores para programadores mais velhos, profissionais que possuem carga de dedicação de programação diária elevada e indivíduos com menor tempo bruto de experiência em programação, sugerindo que as IAs atuam como niveladoras lógicas de gargalos de codificação manual.
